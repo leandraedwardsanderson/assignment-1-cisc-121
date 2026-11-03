@@ -1,0 +1,143 @@
+#PROBLEM 1 - FrogJmp
+
+#Intro
+print("--- FROG CROSSING SIMULATOR ---\n\n\tHelp this small frog get to the other side of the road!\n\nFor each value, input it as a integer between 1 - 1,000,000\n\nX should be less than or equal to Y.")
+
+#starting values for the input goes into the error checking loops
+X = -1
+Y = -1
+D = -1
+
+#error checking range for starting position
+while X < 1 or X > 1000000:
+  try:
+    X = int(input ("\nPlease input the starting position of the frog: "))#user inputs the starting position value
+  except ValueError:
+    print ("\nPlease input the starting position of the frog as an integer between 1 - 1,000,000: ")
+
+
+#error checking range for end position
+while Y < 1 or Y > 1000000 or Y < X:
+  try:  
+    Y = int(input ("\nPlease input the desired end position of the frog: "))#user inputs end position value
+    if Y < X:
+      print ("Invalid. Y must be greater than or equal to X.")
+  except ValueError:
+    print ("\nPlease input the desired end position of the frog as an integer between 1 - 1,000,000: ")
+
+
+#error checking range for jump increment
+while D < 1 or D > 1000000:
+  try:
+    D = int(input ("\nPlease input distance per jump of the frog: "))#user inputs jump increment value
+  except ValueError:
+    print ("\nPlease input the distance per jump of the frog as an integer between 1 - 1,000,000: ")
+
+#---------------------------------------------------------------------------------------------------
+
+def solution (X, Y, D): #START OF FUNCTION
+  jump_count = 0 #counter to track the amount of jumps taken by the frog
+
+  #until the position of the frog is greater than or equal to its intended position, keep incrementing
+  while X < Y:
+    X = X + D
+    jump_count = jump_count + 1
+
+  return jump_count #END OF FUNCTION
+
+
+#PROBLEM 2 - OddOccurencesInArray
+
+A = [9, 3, 9, 3, 9, 7, 9]
+
+#--------------------------------------------------------------------------------------------------
+
+def solution(A): #START OF FUNCTION
+  unpaired_number = None
+
+  #for the length of the array, look through each number per number to find a pair
+  for x in A:
+    paired_numbers = 0
+    for y in A:
+      if x == y:
+        paired_numbers = paired_numbers + 1
+    #if the number of paired numbers is odd, meaning the max amount of paired numbers have been reached, the remaining number in unpaired
+    if paired_numbers % 2 != 0:
+      unpaired_number = x
+      break
+
+  return unpaired_number #END OF FUNCTION
+
+print (f"The unpaired number is {solution(A)}")
+
+#PROBLEM 3 - PermMissingElement
+
+A = [2, 3, 1, 5]
+
+#-----------------------------------------------------------------------
+
+def solution(A): #START OF FUNCTION
+  N = len(A)
+
+  for number in range (1, N + 2):
+    exists = False
+
+    for each_number in A:
+      if each_number == number:
+        exists = True #accounting for numbers within the range that exists within the array
+
+    if exists == False:
+      missing_number = number #if for each number in the range it cannot be accounted for in the array, then this is the missing number
+      return missing_number #END OF FUNCTION
+
+print (f"The missing number is: {solution(A)}")
+
+
+#PROBLEM 4 - PermCheck
+
+A = [4, 1, 3, 2]
+#A = [4, 1, 3]
+
+#--------------------------------------------------------------------------------------------------
+
+def solution(A): #START OF FUNCTION
+  N = len(A)
+
+  #empty set of elements
+  elements = set()
+
+  #adding each number 1 to the length of the array to a set of elements 
+  for x in range (1, N + 1):
+    elements.add(x)
+  
+  #for the length of the set, if the number is not found in the array then it is not a permutation
+  for number in elements:
+    if number not in A:
+      return 0
+
+  #if the number is found it is a permutation
+  return 1 #END OF FUNCTION
+
+print (solution(A))
+
+#PROBLEM 5 - FrogRiverOne
+
+X = 5
+A = [1, 3, 1, 4, 2, 3, 5, 4]
+
+#-----------------------------------------------------------------------
+
+def solution (X,A):
+  elements = set() #empty set of elements
+
+  #for the length of array track the leafs position at each index
+  for K, leaf in enumerate(A):
+    elements.add(leaf) #adds to the set of elements for each index
+
+    if len(elements) == X:
+      return K
+
+  return -1
+
+print(solution(X,A))
+print (f"\n\nGood job! The frog crossed the road in {solution(X, Y, D)} steps.") #this prints the return statement, which is the count
